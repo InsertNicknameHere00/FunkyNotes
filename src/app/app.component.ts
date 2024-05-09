@@ -17,11 +17,14 @@ export class AppComponent {
   title = 'FunkyNotes';
   public counter=0;
   public SelectedNoteCounter=0;
-  public titleLengthMin=5;
-  public descLengthMin=7;
+  // public titleLengthMin=5;
+  // public descLengthMin=7;
+    public titleLengthMin=0;
+  public descLengthMin=0;
   public LengthError=false;
   public modelTitle='';
   public modelDesc='';
+  public modelSort='';
   public modelCategory='';
   public WannaEditData=false;
   public isEditChecked=false;
@@ -71,6 +74,8 @@ this.modelCategory=NoteElement.Category;
     this.NoteCollection.splice(index,1);
     if (this.counter > this.NoteCollection.length - 1) {
       console.log('End of list');
+      this.isEditChecked=false;
+      this.WannaEditData=false;
       this.counter=0;
       this.resetTempData();
   }
@@ -90,4 +95,14 @@ this.modelCategory=NoteElement.Category;
     moveItemInArray(this.NoteCollection, event.previousIndex, event.currentIndex);
   }
   
+  public ProcessSort(){
+      this.NoteCollection.sort((a,b) => a.title.localeCompare(b.title));
+  }
+
+  public ProcessSortByCategory(){
+    if (this.NoteCollection.some(NoteCollection => NoteCollection.Category == this.modelSort)) {
+      this.NoteCollection.sort((a,b) => a.Category.localeCompare(b.Category));
+    }
+  }
+
 }

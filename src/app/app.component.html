@@ -41,6 +41,15 @@
       </div>
     </div>
     <div class="right-side">
+      <div>
+        <input [(ngModel)]="modelSort" type="text" placeholder="Category...">
+        @if(modelSort.length>0){
+      <button (click)="ProcessSortByCategory()" class="Sort">Sort by Category</button>
+        }
+        @if(modelSort.length<1){
+        <button (click)="ProcessSort()" class="Sort">Sort Alphabetically</button>
+        }
+    </div>
       <div class="note-list" cdkDropList (cdkDropListDropped)="drop($event)">
         @for (item of NoteCollection; track item) {
         @if(isEditChecked==false){
