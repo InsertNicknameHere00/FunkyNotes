@@ -17,8 +17,6 @@ export class AppComponent {
   title = 'FunkyNotes';
   public counter=0;
   public SelectedNoteCounter=0;
-  // public titleLengthMin=5;
-  // public descLengthMin=7;
     public titleLengthMin=0;
   public descLengthMin=0;
   public LengthError=false;
