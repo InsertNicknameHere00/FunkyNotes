@@ -12,24 +12,36 @@
  <div class="container-title">FunkyNotes</div>
     <div class="left-side">
       <div class="note-form">
-        @if(LengthError==false){
+
+        @if(LengthErrorTitle==false){
         <input [(ngModel)]="modelTitle" type="text" placeholder="Title">
         <hr>
+        }
+        @if(LengthErrorTitle==true){
+          <input class="Error" [(ngModel)]="modelTitle" type="text" placeholder="Title">
+          <div class="ErrorMessage">Minimum length of the title must be bigger than {{titleLengthMin}}</div>
+          <hr>
+          }
+
+        @if(LengthErrorCategory==false){
         <input [(ngModel)]="modelCategory" type="text" placeholder="Category">
         <hr>
+        }
+        @if(LengthErrorCategory==true){
+          <input class="Error" [(ngModel)]="modelCategory" type="text" placeholder="Category">
+          <div class="ErrorMessage">Minimum length of the Category must be bigger than {{categoryLengthMin}}</div>
+          <hr>
+          }
+
+        @if(LengthErrorDesc==false){
         <textarea [(ngModel)]="modelDesc" placeholder="Let me see what is on your mind!" class="textarea"></textarea>
         }
-
-        @if(LengthError==true){
-          <input class="Error" [(ngModel)]="modelTitle" type="text" placeholder="Title">
-          <div class="ErrorMessage">Minimum length of the title is {{titleLengthMin}}</div>
-          <hr>
-          <input class="Error" [(ngModel)]="modelCategory" type="text" placeholder="Category">
-          <div class="ErrorMessage">Minimum length of the Category is bigger than 1 symbol</div>
-          <hr>
+          @if(LengthErrorDesc==true){
           <textarea [(ngModel)]="modelDesc" placeholder="Let me see what is on your mind!" class="Error"></textarea>
-          <div class="ErrorMessage">Minimum length of the description is {{descLengthMin}}</div>
+          <div class="ErrorMessage">Minimum length of the description must be bigger than {{descLengthMin}}</div>
           }
+          <hr>
+
         <div class="LengthCheck">Current length: {{modelDesc.length}} symbols</div>
         @if(isEditChecked==false || WannaEditData==false){
         <button (click)="ProcessAddNote()" class="button">Add</button>

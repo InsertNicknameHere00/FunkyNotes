@@ -19,44 +19,71 @@ export class AppComponent {
   public SelectedNoteCounter=0;
     public titleLengthMin=5;
   public descLengthMin=7;
-  public LengthError=false;
+  public categoryLengthMin=2;
+  public LengthErrorTitle=false;
+  public LengthErrorDesc=false;
+  public LengthErrorCategory=false;
   public modelTitle='';
   public modelDesc='';
   public modelSort='';
   public modelCategory='';
   public WannaEditData=false;
   public isEditChecked=false;
+  public EndOfChecks=false;
 
   public NoteCollection:{title:string,description:string , Category:string}[]= [];
 
 public ProcessSave() {
-  if(this.modelTitle.length>this.titleLengthMin && this.modelDesc.length>this.descLengthMin && this.modelCategory.length>1){
-  this.NoteCollection[this.counter].title = this.modelTitle;
-  this.NoteCollection[this.counter].description = this.modelDesc;
-  this.NoteCollection[this.counter].Category = this.modelCategory;
-  this.resetTempData();
-}else{
-  console.log('Title, Category or Description is too short');
-  this.LengthError=true;
+  if(this.EndOfChecks!=true){
+    if(this.modelTitle.length>this.titleLengthMin){
+      this.NoteCollection[this.counter].title = this.modelTitle;
+    }else {
+      console.log('Title is too short!');
+      this.LengthErrorTitle=true;
+      return;
+    }
+
+    if(this.modelDesc.length>this.descLengthMin){
+      this.NoteCollection[this.counter].description = this.modelDesc;
+    } else {
+      console.log('Description is too short!');
+      this.LengthErrorDesc=true;
+      return;
+    }
+
+    if(this.modelCategory.length>this.categoryLengthMin){
+      this.NoteCollection[this.counter].Category = this.modelCategory;
+    } else {
+      console.log('Category is too short!');
+      this.LengthErrorCategory=true;
+      return;
+  }
+  this.EndOfChecks=true;
 }
+  this.resetTempData();
 }
 
 private resetTempData(){
   this.modelTitle='';
   this.modelDesc='';
   this.modelCategory='';
-  this.LengthError=false;
+  this.LengthErrorTitle=false;
+  this.LengthErrorCategory=false;
+  this.LengthErrorDesc=false;
+  this.EndOfChecks=false;
 }
 
 public ProcessAddNote(){
-  if(this.modelTitle.length>this.titleLengthMin && this.modelDesc.length>this.descLengthMin){
-  this.NoteCollection.push({title:this.modelTitle,description:this.modelDesc,Category:this.modelCategory});
-  this.LengthError=false;
-  this.resetTempData();
-}else{
-  console.log('Title, Category or Description is too short');
-  this.LengthError=true;
-}
+  if(this.modelTitle.length > this.titleLengthMin && this.modelDesc.length > this.descLengthMin && this.modelCategory.length > this.categoryLengthMin){
+    this.NoteCollection.push({title: this.modelTitle, description: this.modelDesc, Category: this.modelCategory});
+    this.resetTempData();
+  } else {
+    console.log('Title, Category, or Description is too short');
+   this.LengthErrorCategory=true;
+    this.LengthErrorDesc=true;
+    this.LengthErrorTitle=true;
+    return;
+  }
 }
 
   public ProcessNoteEdit(NoteElement, index) {
